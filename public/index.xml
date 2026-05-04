@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Karthik Bharadwaj</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on Karthik Bharadwaj</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CV</title>
+      <link>http://localhost:1313/cv/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/cv/</guid>
+      <description>&lt;p&gt;Currently pursuing a Master of Science in Computer Science at Northeastern University (4.0 GPA). Software engineer with 2 years of experience in backend systems, data pipelines, and cloud infrastructure. Currently studying genetic algorithms and evolutionary computation.&lt;/p&gt;&#xA;&lt;p&gt;You can connect with me by writing to me at &lt;a href=&#34;mailto:karthikbharadwajds@gmail.com&#34;&gt;karthikbharadwajds@gmail.com&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/Karthik_B_resume_main.pdf&#34;&gt;📄 Download Resume (PDF)&lt;/a&gt;&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;br&gt;&#xA;&lt;h2 id=&#34;education-ಶಕಷಣ&#34;&gt;Education (ಶಿಕ್ಷಣ)&lt;/h2&gt;&#xA;&lt;br&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Northeastern University&lt;/strong&gt; — M.S. Computer Science&lt;br&gt;&#xA;&lt;code&gt;Expected Dec 2027&lt;/code&gt; · &lt;code&gt;Boston, MA&lt;/code&gt; · &lt;code&gt;GPA: 4.0/4.0&lt;/code&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Algorithms · DBMS · Foundations of AI · Programming Design Paradigms · Machine Learning · NLP&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;br&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;R V College of Engineering&lt;/strong&gt; — B.E. Computer Science and Engineering&lt;br&gt;&#xA;&lt;code&gt;May 2023&lt;/code&gt; · &lt;code&gt;Bangalore, India&lt;/code&gt; · &lt;code&gt;CGPA: 8.04/10&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
