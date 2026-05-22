@@ -18,7 +18,7 @@ You can connect with me by writing to me at [karthikbharadwajds@gmail.com](mailt
 <br>
 
 > **Northeastern University** — M.S. Computer Science  
-> `Expected Dec 2027` · `Boston, MA` · `GPA: 4.0/4.0`
+> `Expected Dec 2027` · `Boston, MA` · `GPA: 4.0`
 
 ```
 Algorithms · DBMS · Foundations of AI · Programming Design Paradigms · Machine Learning · NLP
@@ -27,7 +27,7 @@ Algorithms · DBMS · Foundations of AI · Programming Design Paradigms · Machi
 <br>
 
 > **R V College of Engineering** — B.E. Computer Science and Engineering  
-> `May 2023` · `Bangalore, India` · `CGPA: 8.04/10`
+> `May 2023` · `Bangalore, India` ·
 
 <br>
 
