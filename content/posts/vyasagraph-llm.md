@@ -3,7 +3,7 @@ title: "VyasaGraph: Building a Mahabharata Knowledge Graph and RAG Chatbot"
 date: 2026-06-05
 description: "How I built a knowledge graph and RAG pipeline over 1.8M words of the Mahabharata using Neo4j, ChromaDB, spaCy, and Ollama"
 type: "post"
-tags: ["Project", "NLP", "Knowledge Graphs"]
+tags: ["NLP", "Knowledge Graphs","LLMs", "Python", "RAG"]
 image: "/images/vyasagraph-og.png"
 ---
 
