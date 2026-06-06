@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Project on Karthik Bharadwaj</title>
+    <link>http://localhost:1313/tags/project/</link>
+    <description>Recent content in Project on Karthik Bharadwaj</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/project/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VyasaGraph: Building a Mahabharata Knowledge Graph and RAG Chatbot</title>
+      <link>http://localhost:1313/posts/vyasagraph-llm/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/vyasagraph-llm/</guid>
+      <description>&lt;p&gt;Your content here in regular markdown&amp;hellip;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
