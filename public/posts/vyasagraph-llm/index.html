@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #10B981;
+            --font-size: 1.1rem;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>VyasaGraph: Building a Mahabharata Knowledge Graph and RAG Chatbot</title>
+    <meta name="description" content="How I built a knowledge graph and RAG pipeline over 1.8M words of the Mahabharata using Neo4j, ChromaDB, spaCy, and Ollama">
+    <meta name="keywords" content='software engineer, portfolio, backend, ML, Project, NLP, Knowledge Graphs'>
+
+    <meta property="og:url" content="http://localhost:1313/posts/vyasagraph-llm/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="VyasaGraph: Building a Mahabharata Knowledge Graph and RAG Chatbot">
+    <meta property="og:description" content="How I built a knowledge graph and RAG pipeline over 1.8M words of the Mahabharata using Neo4j, ChromaDB, spaCy, and Ollama">
+    <meta property="og:image" content="http://localhost:1313/images/vyasagraph-og.png">
+    <meta property="og:image:secure_url" content="http://localhost:1313/images/vyasagraph-og.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VyasaGraph: Building a Mahabharata Knowledge Graph and RAG Chatbot">
+    <meta name="twitter:description" content="How I built a knowledge graph and RAG pipeline over 1.8M words of the Mahabharata using Neo4j, ChromaDB, spaCy, and Ollama">
+    <meta property="twitter:domain" content="http://localhost:1313/posts/vyasagraph-llm/">
+    <meta property="twitter:url" content="http://localhost:1313/posts/vyasagraph-llm/">
+    <meta name="twitter:image" content="http://localhost:1313/images/vyasagraph-og.png">
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/vyasagraph-llm/">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+
+    
+    <script src="/js/bundle.min.7136b4abac7b277aba8bc933917f4602d39a5c44f5590be687244bc86ef4f162.js" integrity="sha256-cTa0q6x7J3q6i8kzkX9GAtOaXET1WQvmhyRLyG708WI="></script>
+
+    
+
+    
+    
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg'>
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="http://localhost:1313/">
+                <img src='/images/karthik-avatar.png' alt="Karthik Bharadwaj">
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="http://localhost:1313/">Karthik Bharadwaj</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/" aria-label="home" ><span data-feather='home'></span> ಗೃಹ </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/cv/" aria-label="" ><span data-feather='file-text'></span> CV </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/posts/" aria-label="" ><span data-feather='pen-tool'></span> Blog </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://github.com/karthik-b-2001" aria-label="github" ><span data-feather='github'></span>  </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://linkedin.com/in/karth1kb" aria-label="linkedin" ><span data-feather='linkedin'></span>  </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="mailto:karthikbharadwajds@gmail.com" aria-label="email" ><span data-feather='mail'></span>  </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/" ><span data-feather='home'></span> ಗೃಹ </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/cv/" ><span data-feather='file-text'></span> CV </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/posts/" ><span data-feather='pen-tool'></span> Blog </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/karthik-b-2001" ><span data-feather='github'></span>  </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://linkedin.com/in/karth1kb" ><span data-feather='linkedin'></span>  </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="mailto:karthikbharadwajds@gmail.com" ><span data-feather='mail'></span>  </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>VyasaGraph: Building a Mahabharata Knowledge Graph and RAG Chatbot</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle">How I built a knowledge graph and RAG pipeline over 1.8M words of the Mahabharata using Neo4j, ChromaDB, spaCy, and Ollama</small>
+	
+
+	
+          <p class="post-date">
+              
+
+              June 5, 2026
+
+              
+          </p>
+	
+
+        <ul class="post-tags">
+          
+           
+             <li class="post-tag"><a href="http://localhost:1313/tags/project">Project</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="http://localhost:1313/tags/nlp">NLP</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="http://localhost:1313/tags/knowledge-graphs">Knowledge Graphs</a></li>
+           
+         
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>I had some time this summer and a question that had been sitting with me: how do large language models actually retrieve and reason over data? Not the transformer internals or the attention math, but the stuff that happens before inference. How does data need to be shaped so a model can do something useful with it?</p>
+<p>I wanted to build something to figure that out. And I wanted a corpus that was messy enough to actually teach me something.</p>
+<h2 id="why-the-mahabharata">Why the Mahabharata?</h2>
+<p>I grew up hearing these stories. Bhishma&rsquo;s oath, the dice game, Karna&rsquo;s loyalty, Arjuna&rsquo;s doubt on the battlefield. But beyond the personal connection, the Mahabharata is a genuinely difficult text to work with computationally. 1.8 million words across 18 books. Hundreds of named characters. Relationships that are familial, political, divine, and adversarial, sometimes all at once.</p>
+<p>Characters go by multiple names. Arjuna is also Partha, Dhananjaya, Savyasachi, Gudakesha. The same person might be referred to differently in consecutive paragraphs. X is the son of Y, who is an incarnation of Z, who fought alongside W in a battle three generations ago. If you want to stress-test a data pipeline, this is the text to do it with.</p>
+<h2 id="discovering-graph-databases">Discovering Graph Databases</h2>
+<p>My research led me to Neo4j, and it clicked immediately.</p>
+<p>The Mahabharata isn&rsquo;t a list of facts. It&rsquo;s a web of relationships: who is kin to whom, who killed whom, who fought in which war, who was allied with which kingdom. Modeling this in a relational database would mean endless JOIN tables and queries that spiral out of control. A graph database handles this naturally. Characters are nodes, relationships are edges, and you traverse them with simple Cypher queries.</p>
+<p>Want to know all the allies of Arjuna&rsquo;s enemies? That&rsquo;s a few hops through the graph. In SQL, good luck.</p>
+<p>When I loaded the first few hundred character nodes and saw them connected by webs of kinship and conflict in Neo4j Browser, it was clear this was the right tool.</p>
+<h2 id="teaching-a-machine-to-read-sanskrit-names">Teaching a Machine to Read Sanskrit Names</h2>
+<p>Off-the-shelf NLP models don&rsquo;t know what to do with mythological Indian texts. spaCy&rsquo;s English models are trained on news articles and web text. They identify &ldquo;Barack Obama&rdquo; as a person just fine. &ldquo;Dhritarashtra&rdquo;? &ldquo;Yudhishthira&rdquo;? These get misclassified or ignored entirely.</p>
+<p>I built a custom NER pipeline using attestation-based scoring: cross-referencing extracted entities against known character lists from Wikidata and the text itself to build confidence that &ldquo;Partha&rdquo; and &ldquo;Arjuna&rdquo; refer to the same person. Watching the entity resolution improve with each iteration was one of the more satisfying parts of this project.</p>
+<p>Relationship extraction was harder. The text doesn&rsquo;t say &ldquo;Arjuna ALLIED_WITH Krishna.&rdquo; It says something like &ldquo;And so Partha, guided by the son of Devaki, rode forth into battle.&rdquo; Turning that into a structured triple (Arjuna, ALLIED_WITH, Krishna) required dependency parsing, pattern matching, and a lot of manual validation against ground truth data I pulled from Wikidata&rsquo;s SPARQL endpoint.</p>
+<h2 id="when-the-graph-gets-it-wrong">When the Graph Gets It Wrong</h2>
+<p>And it got things wrong. A lot.</p>
+<p>Here&rsquo;s an early version of the KILLED relationship subgraph:</p>
+<p><img src="/images/vyasagraph-graph-mistake.png" alt="Incorrect KILLED relationships in the graph"></p>
+<p>Karna killing Satyaki, Satyaki killing Drona, Abhimanyu killing Lakshmana and Vikarna. Some of these are partially right, some are flat out wrong, and the directionality is off on others. The extraction pipeline was too aggressively inferring KILLED edges from co-occurrence. Two warriors mentioned in the same battle passage doesn&rsquo;t mean one killed the other.</p>
+<p>Compare that to the MARRIED_TO subgraph, which came out clean:</p>
+<p><img src="/images/vyasagraph-graph-correct.png" alt="Correct MARRIED_TO relationships in the graph"></p>
+<p>All five Pandavas married to Draupadi, Arjuna also married to Subhadra, Pandu married to Kunti and Madri. This worked because marriage relationships in the text are stated explicitly. There&rsquo;s no inference needed.</p>
+<p>The takeaway was clear. Relationship types that are stated directly in the source (marriages, parentage) extract reliably. Relationship types that require contextual reasoning (kills, alliances, betrayals) need much more careful handling. This is where ground truth validation became essential, not as a nice-to-have, but as a core part of the pipeline.</p>
+<h2 id="why-both-vector-search-and-graph-traversal">Why Both Vector Search and Graph Traversal?</h2>
+<p>This was the part I was most curious about going in.</p>
+<p>RAG (Retrieval-Augmented Generation) is the pattern where you retrieve relevant context from an external source at query time instead of relying on the LLM&rsquo;s baked-in knowledge. But plain vector search has limits.</p>
+<p>ChromaDB with sentence embeddings can answer &ldquo;Tell me about Bhishma&rdquo; well enough. It finds semantically similar text chunks and hands them to the model. But ask &ldquo;Who are Bhishma&rsquo;s nephews and which ones fought against him in the Kurukshetra war?&rdquo; and it falls apart. That question needs relational reasoning: traversing family trees and battle allegiances, not just finding similar paragraphs.</p>
+<p>So the pipeline uses both. ChromaDB handles semantic retrieval (finding relevant narrative passages), Neo4j handles structural queries (traversing relationships), and the LLM (running locally through Ollama) puts it all together into a coherent answer.</p>
+<p>The first time it correctly answered a multi-hop question by combining a graph traversal with a text chunk, that was a good moment.</p>
+<h2 id="the-pipeline">The Pipeline</h2>
+<p>The data flows like this: the raw text (all 18 books) gets parsed and chunked. spaCy runs NER over the chunks to identify characters. The relationship extraction pipeline pulls out structured triples, which get loaded into Neo4j as the knowledge graph. The same chunks get embedded and stored in ChromaDB.</p>
+<p>At query time, the user&rsquo;s question hits both stores. The vector store returns relevant passages, the graph returns relevant relationships. Both get combined into prompt context, and Ollama generates the answer, streamed through a FastAPI backend to a React 19 frontend.</p>
+<p>Conceptually simple. Making each piece work reliably on messy mythological text is where the time went.</p>
+<h2 id="what-i-learned">What I Learned</h2>
+<p>The biggest thing: the quality of your retrieval pipeline matters more than the quality of your model. A decent model with good context will outperform a powerful model with bad context every time.</p>
+<p>I also came away with a real appreciation for the NLP challenges in non-English and historical texts. The tools are good, but they&rsquo;re built for modern English. Adapting them to something like the Mahabharata takes work.</p>
+<p>And building a system that can reason about stories I grew up with was pretty cool.</p>
+<p>The project is open source on <a href="https://github.com/karthik-b-2001/VyasaGraph">GitHub</a>. If you&rsquo;re into knowledge graphs, RAG, or the Mahabharata, feel free to reach out.</p>
+
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+        <svg id="btt-button" class="arrow-logo" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top">
+    
+    <path d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/>
+</svg>
+<script>
+    let backToTopButton = document.getElementById("btt-button");
+
+    window.onscroll = function() {
+        scrollFunction()
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            backToTopButton.style.display = "block";
+        } else {
+            backToTopButton.style.display = "none";
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo(0, 0);
+    }
+</script>
+
+    
+    
+</div>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+        
+            
+        
+
+        
+
+        
+        
+
+        
+
+    
+
+    
+        <span>&copy; 2026 Karthik Bharadwaj</span>
+    
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>

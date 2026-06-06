@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Knowledge Graphs on Karthik Bharadwaj</title>
+    <link>http://localhost:1313/tags/knowledge-graphs/</link>
+    <description>Recent content in Knowledge Graphs on Karthik Bharadwaj</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/knowledge-graphs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VyasaGraph: Building a Mahabharata Knowledge Graph and RAG Chatbot</title>
+      <link>http://localhost:1313/posts/vyasagraph-llm/</link>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/vyasagraph-llm/</guid>
+      <description>&lt;p&gt;I had some time this summer and a question that had been sitting with me: how do large language models actually retrieve and reason over data? Not the transformer internals or the attention math, but the stuff that happens before inference. How does data need to be shaped so a model can do something useful with it?&lt;/p&gt;&#xA;&lt;p&gt;I wanted to build something to figure that out. And I wanted a corpus that was messy enough to actually teach me something.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

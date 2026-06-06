@@ -176,13 +176,13 @@
 <br>
 <blockquote>
 <p><strong>Northeastern University</strong> — M.S. Computer Science<br>
-<code>Expected Dec 2027</code> · <code>Boston, MA</code> · <code>GPA: 4.0/4.0</code></p>
+<code>Expected Dec 2027</code> · <code>Boston, MA</code> · <code>GPA: 4.0</code></p>
 </blockquote>
 <pre tabindex="0"><code>Algorithms · DBMS · Foundations of AI · Programming Design Paradigms · Machine Learning · NLP
 </code></pre><br>
 <blockquote>
 <p><strong>R V College of Engineering</strong> — B.E. Computer Science and Engineering<br>
-<code>May 2023</code> · <code>Bangalore, India</code> · <code>CGPA: 8.04/10</code></p>
+<code>May 2023</code> · <code>Bangalore, India</code> ·</p>
 </blockquote>
 <br>
 <br>
@@ -211,6 +211,15 @@
 </ul>
 <br>
 <blockquote>
+<p><strong>Sun Precision Tools</strong> — Software Engineer<br>
+<code>Aug 2023 – Dec 2023</code> · <code>Bangalore, India</code></p>
+</blockquote>
+<ul>
+<li>Engineered a software system from the ground up to replace a paper-based invoice generation process, owning architecture, implementation, and rollout across the shop floor.</li>
+<li>Developed digital gauge lifecycle management from zero, designing state tracking, transitions, and reporting workflows that gave operations teams real-time visibility into calibration and compliance status.</li>
+</ul>
+<br>
+<blockquote>
 <p><strong>Crestron Electronics</strong> — Software Development Intern<br>
 <code>Mar 2023 – Jul 2023</code> · <code>Bangalore, India</code></p>
 </blockquote>
@@ -223,12 +232,25 @@
 <br>
 <h2 id="projects-ಯಜನಗಳ">Projects (ಯೋಜನೆಗಳು)</h2>
 <br>
+<h3 id="vyasagraph--mahabharata-knowledge-graph--rag-chatbot"><a href="https://github.com/karthik-b-2001/vyasagraph">VyasaGraph — Mahabharata Knowledge Graph &amp; RAG Chatbot</a></h3>
+<pre tabindex="0"><code>Python · FastAPI · React 19 · TypeScript · Neo4j · ChromaDB · spaCy · Ollama · Wikidata SPARQL · Tailwind CSS
+</code></pre><ul>
+<li>Built a knowledge graph over the 1.8M-word Mahabharata corpus with 228 characters and 315 relationships sourced from three independent pipelines: spaCy dependency-parsed attestations from the original text, a structured CSV dataset, and Wikidata SPARQL queries, with human review and deduplication across all sources.</li>
+<li>Implemented a graph-augmented RAG pipeline combining Neo4j Cypher queries with ChromaDB semantic search (960 embedded chunks via sentence-transformers) to ground LLM answers in both structured facts and source text, served through a FastAPI streaming backend and a React chat interface with real-time citation display.</li>
+</ul>
+<br>
 <h3 id="paretofolio--portfolio-optimization-engine"><a href="https://github.com/karthik-b-2001/ParetoFolio">ParetoFolio — Portfolio Optimization Engine</a></h3>
 <pre tabindex="0"><code>Python · FastAPI · Pydantic v2 · React 19 · TypeScript · Tailwind CSS · Recharts
 </code></pre><ul>
-<li>Constructed a FastAPI backend with Pydantic v2 request validation, yfinance data ingestion, and a covariance matrix computation pipeline, serving a typed RESTful API consumed by a React 19 frontend.</li>
-<li>Implemented NSGA-II entirely from scratch in Python, including SBX crossover, polynomial mutation, tournament selection, and crowding distance, removing dependency on external optimization libraries.</li>
-<li>Designed a two-objective optimization strategy for portfolio construction, producing a ranked set of Pareto-optimal portfolios across 75 US equities with an interactive efficient frontier plot and Sharpe-ranked table.</li>
+<li>Built a responsive React 19 frontend with interactive data visualization and a typed FastAPI backend, serving a RESTful API for multi-objective portfolio optimization across 75 US equities.</li>
+<li>Implemented NSGA-II from scratch: SBX crossover, polynomial mutation, tournament selection, and crowding distance, producing Pareto-optimal portfolios with an interactive efficient frontier and Sharpe-ranked table.</li>
+</ul>
+<br>
+<h3 id="gojo-satoru-hand-tracking-vfx-engine"><a href="https://github.com/karthik-b-2001/gojo-handtracker">Gojo Satoru Hand-Tracking VFX Engine</a></h3>
+<pre tabindex="0"><code>Python · OpenCV · MediaPipe · NumPy · Streamlit · WebRTC
+</code></pre><ul>
+<li>Built a real-time, markerless VFX engine that overlays Jujutsu Kaisen inspired cursed-energy effects onto a live webcam feed driven entirely by hand gestures. Tracks both hands at 21 landmarks each, classifies five distinct gestures, and maps each to a different effect including hand-following auras, energy orbs, a charged beam, and a full-frame Domain Expansion with background segmentation.</li>
+<li>Implemented the effects layer with a 200-particle physics system (attraction, tangential spin, life-decay), additive glow compositing, and confidence-mask alpha blending from MediaPipe selfie segmentation. Ported to the browser via Streamlit + streamlit-webrtc with per-session isolated state.</li>
 </ul>
 <br>
 <h3 id="sportstv-streaming-data-warehouse"><a href="https://github.com/karthik-b-2001/sportstv-streaming-warehouse">SportsTV Streaming Data Warehouse</a></h3>
@@ -236,7 +258,13 @@
 </code></pre><ul>
 <li>Engineered a bulk-batched, idempotent ETL data pipeline in R with surrogate-key resolution and partition pruning, achieving a 99%+ source-to-warehouse match rate across 2M+ streaming transactions.</li>
 <li>Modeled a Kimball-style star schema with five conformed dimensions and a RANGE-partitioned fact table on cloud-hosted MySQL 8, consolidating heterogeneous data sources into a unified analytical warehouse.</li>
-<li>Generated a fully automated BI report with KPI summaries, growth trends, and device breakdowns, driven entirely by live SQL queries with zero hard-coded values.</li>
+</ul>
+<br>
+<h3 id="java-calendar-application"><a href="https://github.com/karthik-b-2001/multiCal">Java Calendar Application</a></h3>
+<pre tabindex="0"><code>Java · Swing · JUnit · PIT Mutation Testing · MVC
+</code></pre><ul>
+<li>Built a calendar application in Java with MVC architecture, supporting recurring event series, timezone handling, and multiple calendar views through extensive use of design patterns (Builder, Command, Strategy, Visitor, Decorator, Factory Method).</li>
+<li>Full GUI in Java Swing with rigorous test coverage via JUnit and mutation testing using PIT, achieving high mutation kill rates that validated test suite effectiveness beyond simple line coverage.</li>
 </ul>
 <br>
 <h3 id="autonomous-vehicle-perception-pipeline">Autonomous Vehicle Perception Pipeline</h3>
@@ -271,7 +299,7 @@
       </tr>
       <tr>
           <td style="text-align: left"><strong>Databases</strong></td>
-          <td style="text-align: left"><code>PostgreSQL</code> · <code>MySQL</code> · <code>MongoDB</code> · <code>SQLite</code> · <code>Redis</code> · <code>Firebase</code></td>
+          <td style="text-align: left"><code>PostgreSQL</code> · <code>MySQL</code> · <code>MongoDB</code> · <code>SQLite</code> · <code>Redis</code> · <code>Firebase</code> · <code>Neo4j</code> · <code>ChromaDB</code></td>
       </tr>
       <tr>
           <td style="text-align: left"><strong>Cloud &amp; DevOps</strong></td>
@@ -279,7 +307,7 @@
       </tr>
       <tr>
           <td style="text-align: left"><strong>ML &amp; AI</strong></td>
-          <td style="text-align: left"><code>PyTorch</code> · <code>scikit-learn</code> · <code>OpenCV</code> · <code>YOLOv3</code> · <code>CNNs</code> · <code>Transfer Learning</code> · <code>NLP</code></td>
+          <td style="text-align: left"><code>PyTorch</code> · <code>scikit-learn</code> · <code>OpenCV</code> · <code>YOLOv3</code> · <code>CNNs</code> · <code>Transfer Learning</code> · <code>NLP</code> · <code>spaCy</code> · <code>RAG</code></td>
       </tr>
       <tr>
           <td style="text-align: left"><strong>Practices</strong></td>
