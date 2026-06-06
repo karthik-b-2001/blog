@@ -31,54 +31,56 @@ When I loaded the first few hundred character nodes and saw them connected by we
 
 Off-the-shelf NLP models don't know what to do with mythological Indian texts. spaCy's English models are trained on news articles and web text. They identify "Barack Obama" as a person just fine. "Dhritarashtra"? "Yudhishthira"? These get misclassified or ignored entirely.
 
-I built a custom NER pipeline using attestation-based scoring: cross-referencing extracted entities against known character lists from Wikidata and the text itself to build confidence that "Partha" and "Arjuna" refer to the same person. Watching the entity resolution improve with each iteration was one of the more satisfying parts of this project.
+Entity recognition was one challenge, but the harder problem was relationship extraction. The text doesn't say "Arjuna ALLIED_WITH Krishna." It says something like "And so Partha, guided by the son of Devaki, rode forth into battle." I used spaCy's dependency parsing to extract relationships from grammatical structure: epithet mining ("X, son of Y") and SVO (subject-verb-object) triples for kill relationships. Each extracted relationship was then scored by attestation, meaning how many independent sentences in the corpus support it. A relationship mentioned across 7 sentences in 3 different parvas is near-certain. One that shows up once in a chaotic battle scene is suspect.
 
-Relationship extraction was harder. The text doesn't say "Arjuna ALLIED_WITH Krishna." It says something like "And so Partha, guided by the son of Devaki, rode forth into battle." Turning that into a structured triple (Arjuna, ALLIED_WITH, Krishna) required dependency parsing, pattern matching, and a lot of manual validation against ground truth data I pulled from Wikidata's SPARQL endpoint.
+Every extraction went through human review. Mine.
+
+## Building the Graph from Three Sources
+
+I didn't want to rely on a single extraction method. The final knowledge graph is built from three independent pipelines, merged and deduplicated:
+
+The first was the attestation-based NLP extraction from the text itself, which gave me 91 relationships. The second was Wikidata, where I wrote SPARQL queries against all Mahabharata characters (tagged with P1441 = Q8276) to pull parents, spouses, siblings, children, kills, and conflicts. That gave me 245 relationships, with Sanskrit diacritics normalized to English transliterations. The third was a structured CSV dataset of family relationships (father/son, mother/son, husband/wife, brothers), which added another 67.
+
+After merging and deduplication, the graph has 228 character nodes and 315 relationships. 66 of those relationships are confirmed by multiple independent sources, which gave me real confidence in the data quality.
+
+This is probably what I'm proudest of in the project. Most knowledge graphs over texts like this either use a single pre-built dataset or just throw an LLM at the text and trust whatever comes out. Neither approach gives you traceability. In VyasaGraph, every relationship is traceable to its origin: which pipeline produced it, how many sources confirm it.
 
 ## When the Graph Gets It Wrong
 
-And it got things wrong. A lot.
+It still got things wrong though.
 
 Here's an early version of the KILLED relationship subgraph:
 
 ![Incorrect KILLED relationships in the graph](/images/vyasagraph-graph-mistake.png)
 
-Karna killing Satyaki, Satyaki killing Drona, Abhimanyu killing Lakshmana and Vikarna. Some of these are partially right, some are flat out wrong, and the directionality is off on others. The extraction pipeline was too aggressively inferring KILLED edges from co-occurrence. Two warriors mentioned in the same battle passage doesn't mean one killed the other.
+Karna killing Satyaki, Satyaki killing Drona, Abhimanyu killing Lakshmana and Vikarna. Some of these are partially right, some are flat out wrong, and the directionality is off on others. Even with structured SVO extraction, battle scenes in the Mahabharata are dense and confusing. Multiple warriors are mentioned in rapid succession with kill verbs flying everywhere, and the parser sometimes attaches the wrong subject to the wrong object.
 
 Compare that to the MARRIED_TO subgraph, which came out clean:
 
 ![Correct MARRIED_TO relationships in the graph](/images/vyasagraph-graph-correct.png)
 
-All five Pandavas married to Draupadi, Arjuna also married to Subhadra, Pandu married to Kunti and Madri. This worked because marriage relationships in the text are stated explicitly. There's no inference needed.
+All five Pandavas married to Draupadi, Arjuna also married to Subhadra, Pandu married to Kunti and Madri. This worked because marriages in the text are stated directly and unambiguously. No inference needed.
 
-The takeaway was clear. Relationship types that are stated directly in the source (marriages, parentage) extract reliably. Relationship types that require contextual reasoning (kills, alliances, betrayals) need much more careful handling. This is where ground truth validation became essential, not as a nice-to-have, but as a core part of the pipeline.
+The pattern was consistent. Explicit relationships (marriages, parentage) extract reliably. Contextual relationships (kills, alliances) need careful handling and validation. That's exactly why the multi-source approach matters: the Wikidata kill data could catch errors in the NLP extraction, and vice versa.
 
 ## Why Both Vector Search and Graph Traversal?
 
 This was the part I was most curious about going in.
 
-RAG (Retrieval-Augmented Generation) is the pattern where you retrieve relevant context from an external source at query time instead of relying on the LLM's baked-in knowledge. But plain vector search has limits.
+RAG (Retrieval-Augmented Generation) retrieves relevant context from an external source at query time instead of relying on the LLM's built-in knowledge. But plain vector search has limits.
 
-ChromaDB with sentence embeddings can answer "Tell me about Bhishma" well enough. It finds semantically similar text chunks and hands them to the model. But ask "Who are Bhishma's nephews and which ones fought against him in the Kurukshetra war?" and it falls apart. That question needs relational reasoning: traversing family trees and battle allegiances, not just finding similar paragraphs.
+ChromaDB with sentence embeddings (all-MiniLM-L6-v2, embedded locally) can answer "Tell me about Bhishma" well enough. It finds semantically similar text chunks and hands them to the model. But ask "Who are Bhishma's nephews and which ones fought against him in the Kurukshetra war?" and it falls apart. That question needs relational reasoning: traversing family trees and battle allegiances, not just finding similar paragraphs.
 
-So the pipeline uses both. ChromaDB handles semantic retrieval (finding relevant narrative passages), Neo4j handles structural queries (traversing relationships), and the LLM (running locally through Ollama) puts it all together into a coherent answer.
+So the pipeline uses both. ChromaDB handles semantic retrieval (finding relevant narrative passages from the 960 embedded chunks), Neo4j handles structural queries (traversing the relationship graph), and the LLM (llama3.1:8b running locally through Ollama) puts it all together. The answer gets streamed back through FastAPI to a React 19 frontend with entity detection, expandable graph facts, and source citations.
 
 The first time it correctly answered a multi-hop question by combining a graph traversal with a text chunk, that was a good moment.
 
-## The Pipeline
-
-The data flows like this: the raw text (all 18 books) gets parsed and chunked. spaCy runs NER over the chunks to identify characters. The relationship extraction pipeline pulls out structured triples, which get loaded into Neo4j as the knowledge graph. The same chunks get embedded and stored in ChromaDB.
-
-At query time, the user's question hits both stores. The vector store returns relevant passages, the graph returns relevant relationships. Both get combined into prompt context, and Ollama generates the answer, streamed through a FastAPI backend to a React 19 frontend.
-
-Conceptually simple. Making each piece work reliably on messy mythological text is where the time went.
-
 ## What I Learned
 
-The biggest thing: the quality of your retrieval pipeline matters more than the quality of your model. A decent model with good context will outperform a powerful model with bad context every time.
+The biggest thing: the quality of your retrieval pipeline matters more than the quality of your model. A decent model with good context will outperform a powerful model with bad context.
 
-I also came away with a real appreciation for the NLP challenges in non-English and historical texts. The tools are good, but they're built for modern English. Adapting them to something like the Mahabharata takes work.
+I also came away with a real appreciation for the NLP challenges in non-English and historical texts. The tools are good, but they're built for modern English. Adapting them to the Mahabharata took real work.
 
 And building a system that can reason about stories I grew up with was pretty cool.
 
-The project is open source on [GitHub](https://github.com/karthik-b-2001/VyasaGraph). If you're into knowledge graphs, RAG, or the Mahabharata, feel free to reach out.
+The project is open source on [GitHub](https://github.com/karthik-b-2001/VyasaGraph).
