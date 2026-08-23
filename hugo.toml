@@ -31,7 +31,7 @@ theme = "gokarna"
 
 [[params.socialIcons]]
   name = "email"
-  url = "mailto:karthikbharadwajds@gmail.com"
+  url = "mailto:bharadwaj.kar@northeastern.edu"
 
 [[menu.main]]
   identifier = "home"
